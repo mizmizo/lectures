@@ -1,0 +1,32 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <Eigen/Dense>
+
+using namespace std;
+using namespace Eigen;
+
+MatrixXd readdata(char* name)
+{
+  MatrixXd A = MatrixXdZero(2,50);
+  string str;
+  int i;
+  ifstream ifs(name);
+  if(ifs.fail())
+    {
+      cerr << "file open error!" << endl;
+      return EXIT_FAILURE;
+    }
+  for (i=0;i<50;i++)
+    {
+      getline(ifs,str);
+      sscanf(str.data(), "%d %d", &A(1,i), &A(2,i));
+      cout << i << " " << A(1,i) << " : " << A(2,i) << endl;
+    }
+  return A;
+}
+
+int main()
+{
+  MatrixXd DATA = readdata("../data/Train1.txt");
+}

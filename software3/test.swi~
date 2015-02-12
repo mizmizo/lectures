@@ -1,0 +1,3 @@
+test(X, [X|Xs], Xs).
+
+test(X, [Y|Ys], [Y|Zs]):- test(X,Ys,Zs).
