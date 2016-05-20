@@ -64,9 +64,9 @@ def homework(train_X, test_X, train_y):
                 u[i] = np.dot(tmp_z, w[i]) + b[i]
             else:
                 u[i] = np.dot(z[i - 1], w[i]) + b[i]
-                z[i] = 1 / (1 + np.exp(-u[i])) #sigmoid
+            z[i] = 1 / (1 + np.exp(-u[i])) #sigmoid
         u[layer_num - 1] = np.dot(z[layer_num - 2], w[layer_num - 1]) + b[layer_num - 1]
         z[layer_num - 1] = np.exp(u[layer_num -1]) / np.sum(np.exp(u[layer_num - 1]), axis = 1, keepdims = True) #softmax
-        pred_y[np.arange(len(test_X))] = np.argmax(z[layer_num - 1])
+        pred_y[j] = np.argmax(z[layer_num - 1])
 
     return pred_y
