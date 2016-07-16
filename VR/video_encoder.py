@@ -39,7 +39,7 @@ def encode():
             break
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-        if (len(out_data) > 1800):
+        if (len(out_data) > 4000):
             print "save data %d: " % cnt + str(out_data.shape)
             out_name = argv[1][argv[1].rfind("/") + 1 : argv[1].rfind(".")] + "_" + str(cnt) + ".npy"
             np.save(out_name, out_data)
