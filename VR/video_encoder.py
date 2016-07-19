@@ -19,16 +19,17 @@ def encode():
     if (len(frame.shape) == 2):
         print "input BGR movie!"
         quit()
-    frame = cv2.resize(frame, (160, 90))
+    frame = cv2.resize(frame, (64, 36))
     cv2.imshow('frame', frame)
 
     out_data = frame.reshape(1, 1, frame.shape[0] * frame.shape[1] * frame.shape[2])[0]
     cnt = 0
+    cnt2 = 0
     init_flag = False
     while(cap.isOpened()):
         ret, frame = cap.read()
         if ret:
-            frame = cv2.resize(frame, (160, 90))
+            frame = cv2.resize(frame, (64, 36))
             cv2.imshow('frame', frame)
             if init_flag:
                 out_data = frame.reshape(1, 1, frame.shape[0] * frame.shape[1] * frame.shape[2])[0]
@@ -39,11 +40,14 @@ def encode():
             break
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-        if (len(out_data) > 4000):
-            print "save data %d: " % cnt + str(out_data.shape)
-            out_name = argv[1][argv[1].rfind("/") + 1 : argv[1].rfind(".")] + "_" + str(cnt) + ".npy"
+        if (len(out_data) >= 500):
+            print "save data %d " % cnt + "- %d: " % cnt2 + str(out_data.shape)
+            out_name = argv[1][argv[1].rfind("/") + 1 : argv[1].rfind(".")] + "_" + str(cnt) + "_" + str(cnt2) + ".npy"
             np.save(out_name, out_data)
-            cnt += 1
+            cnt2 += 1
+            if (cnt2 > 7):
+                cnt += 1
+                cnt2 = 0
             init_flag = True
 
     print "save data %d: " % cnt + str(out_data.shape)
